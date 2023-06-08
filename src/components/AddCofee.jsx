@@ -1,7 +1,7 @@
 
 
 const AddCofee = () => {
-    const handleAddCoffee = event => {
+    const handleAddCofee = event => {
         event.preventDefault();                                 
         const form = event.target;
         const name = form.name.value;
@@ -13,11 +13,25 @@ const AddCofee = () => {
         const photo = form.photo.value;
         const newCoffee = { name, quantity, supplier, taste, category, details, photo };
         console.log(newCoffee);
+
+        // send data to the server
+        fetch('http://localhost:5000/cofee', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+           body: JSON.stringify(newCoffee)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        }
+        )
     }
     return (
         <div className="bg-[#F4F3F0] p-24">
             <h2 className="text-3xl font-extrabold">Add Coffee</h2>
-            <form onSubmit={handleAddCoffee}>
+            <form onSubmit={handleAddCofee}>
                 {/* from name and quantity */}
                 <div className="md:flex">
                     <div className="form-control md:w-1/2">
